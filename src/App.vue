@@ -6,10 +6,13 @@ import BarChart from "./components/BarChart.vue";
 import PieChart from "./components/PieChart.vue";
 import FunnelChart from "./components/FunnelChart.vue";
 
-const canvasWidth = ref(1080);
-const canvasHeight = ref(720);
-const widgetWidth = ref(540);
-const widgetHeight = ref(360);
+// 1280*720、1920*1080
+const canvasWidth = ref(1920);
+const canvasHeight = ref(1080);
+const originCanvasWidth = ref(canvasWidth.value);
+const originCanvasHeight = ref(canvasHeight.value);
+const widgetWidth = ref(960);
+const widgetHeight = ref(540);
 
 window.addEventListener("resize", () => {
   let windowWidth = window.innerWidth;
@@ -23,16 +26,16 @@ window.addEventListener("resize", () => {
       class="canvas"
       :style="{ width: canvasWidth + 'px', height: canvasHeight + 'px' }"
     >
-      <Widget :width="540" :height="360" :left="0" :top="0">
+      <Widget :width="960" :height="540" :left="0" :top="0">
         <LineChart></LineChart>
       </Widget>
-      <Widget :width="540" :height="360" :left="540" :top="0">
+      <Widget :width="960" :height="540" :left="960" :top="0">
         <BarChart></BarChart>
       </Widget>
-      <Widget :width="540" :height="360" :left="0" :top="360">
+      <Widget :width="960" :height="540" :left="0" :top="540">
         <PieChart></PieChart>
       </Widget>
-      <Widget :width="540" :height="360" :left="540" :top="360">
+      <Widget :width="960" :height="540" :left="960" :top="540">
         <FunnelChart></FunnelChart>
       </Widget>
     </div>
