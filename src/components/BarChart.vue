@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import * as echarts from "echarts";
+import ResizeObserver from "resize-observer-polyfill";
 
 const chartBox = ref(null);
 onMounted(() => {
@@ -28,6 +29,11 @@ onMounted(() => {
   };
 
   option && myChart.setOption(option);
+
+  const ro = new ResizeObserver(() => {
+    myChart.resize();
+  });
+  ro.observe(chartBox.value);
 });
 </script>
 

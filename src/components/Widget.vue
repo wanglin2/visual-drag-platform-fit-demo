@@ -1,4 +1,6 @@
 <script setup>
+import { computed } from "vue";
+
 const props = defineProps({
   width: {
     type: Number,
@@ -16,6 +18,53 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  ratioWidth: {
+    type: Number,
+    default: 1,
+  },
+  ratioHeight: {
+    type: Number,
+    default: 1,
+  },
+  type: {
+    type: String,
+    default: "", // fixedSize、widthAuto、screenAuto、equalScale
+  },
+});
+
+const actWidth = computed(() => {
+  switch (props.type) {
+    case "widthAuto":
+    case "screenAuto":
+      return props.width * props.ratioWidth;
+    default:
+      return props.width;
+  }
+});
+const actHeight = computed(() => {
+  switch (props.type) {
+    case "screenAuto":
+      return props.height * props.ratioHeight;
+    default:
+      return props.height;
+  }
+});
+const actLeft = computed(() => {
+  switch (props.type) {
+    case "widthAuto":
+    case "screenAuto":
+      return props.left * props.ratioWidth;
+    default:
+      return props.left;
+  }
+});
+const actTop = computed(() => {
+  switch (props.type) {
+    case "screenAuto":
+      return props.top * props.ratioHeight;
+    default:
+      return props.top;
+  }
 });
 </script>
 
@@ -23,10 +72,10 @@ const props = defineProps({
   <div
     class="widgetBox"
     :style="{
-      width: width + 'px',
-      height: height + 'px',
-      left: left + 'px',
-      top: top + 'px',
+      width: actWidth + 'px',
+      height: actHeight + 'px',
+      left: actLeft + 'px',
+      top: actTop + 'px',
     }"
   >
     <slot></slot>
@@ -36,5 +85,6 @@ const props = defineProps({
 <style scoped>
 .widgetBox {
   position: absolute;
+  overflow: hidden;
 }
 </style>
